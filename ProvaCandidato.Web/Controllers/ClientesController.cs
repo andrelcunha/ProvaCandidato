@@ -25,6 +25,23 @@ namespace ProvaCandidato.Controllers
             return View(await clientes.ToListAsync());
         }
 
+        public ActionResult SearchAct()
+        {
+            return View();
+        }
+
+
+        [HttpPost]
+        public async Task<ActionResult> Index(string nameToFind)
+        {
+
+            var clientes = db.Clientes
+                .Where(c => c.Ativo)
+                .Where(ca => ca.Nome.Contains(nameToFind))
+                .Include(c => c.Cidade);
+            return View(await clientes.ToListAsync());
+        }
+
         // GET: Clientes/Details/5
         public async Task<ActionResult> Details(int? id)
         {
