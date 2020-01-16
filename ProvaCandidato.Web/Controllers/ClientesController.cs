@@ -12,22 +12,16 @@ using ProvaCandidato.Data.Entidade;
 
 namespace ProvaCandidato.Controllers
 {
-    public class ClientesController : Controller
+    public class ClientesController : ModelsController<Cliente>
     {
-        private ContextoPrincipal db = new ContextoPrincipal();
 
         // GET: Clientes
-        public async Task<ActionResult> Index()
+        public override async Task<ActionResult> Index()
         {
             var clientes = db.Clientes
-                .Where(c => c.Ativo)
-                .Include(c => c.Cidade);
+                            .Where(c => c.Ativo)
+                            .Include(c => c.Cidade);
             return View(await clientes.ToListAsync());
-        }
-
-        public ActionResult SearchAct()
-        {
-            return View();
         }
 
 
@@ -42,23 +36,9 @@ namespace ProvaCandidato.Controllers
             return View(await clientes.ToListAsync());
         }
 
-        // GET: Clientes/Details/5
-        public async Task<ActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Cliente cliente = await db.Clientes.FindAsync(id);
-            if (cliente == null)
-            {
-                return HttpNotFound();
-            }
-            return View(cliente);
-        }
 
         // GET: Clientes/Create
-        public ActionResult Create()
+        public override ActionResult Create()
         {
             ViewBag.CidadeId = new SelectList(db.Cidades, "Codigo", "Nome");
             return View();
@@ -69,7 +49,7 @@ namespace ProvaCandidato.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Codigo,Nome,DataNascimento,CidadeId,Ativo")] Cliente cliente)
+        public override async Task<ActionResult> Create([Bind(Include = "Codigo,Nome,DataNascimento,CidadeId,Ativo")] Cliente cliente)
         {
             if (cliente.DataNascimento > DateTime.Now)
             {
@@ -87,7 +67,7 @@ namespace ProvaCandidato.Controllers
         }
 
         // GET: Clientes/Edit/5
-        public async Task<ActionResult> Edit(int? id)
+        public override async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
             {
@@ -107,7 +87,7 @@ namespace ProvaCandidato.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Codigo,Nome,DataNascimento,CidadeId,Ativo")] Cliente cliente)
+        public override async Task<ActionResult> Edit([Bind(Include = "Codigo,Nome,DataNascimento,CidadeId,Ativo")] Cliente cliente)
         {
             if (ModelState.IsValid)
             {
@@ -117,41 +97,6 @@ namespace ProvaCandidato.Controllers
             }
             ViewBag.CidadeId = new SelectList(db.Cidades, "Codigo", "Nome", cliente.CidadeId);
             return View(cliente);
-        }
-
-        // GET: Clientes/Delete/5
-        public async Task<ActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Cliente cliente = await db.Clientes.FindAsync(id);
-            if (cliente == null)
-            {
-                return HttpNotFound();
-            }
-            return View(cliente);
-        }
-
-        // POST: Clientes/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteConfirmed(int id)
-        {
-            Cliente cliente = await db.Clientes.FindAsync(id);
-            db.Clientes.Remove(cliente);
-            await db.SaveChangesAsync();
-            return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
         }
     }
 }
