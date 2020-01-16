@@ -53,6 +53,7 @@
     <Compile Include="ContextoPrincipal.cs" />
     <Compile Include="Entidade\Cidade.cs" />
     <Compile Include="Entidade\Cliente.cs" />
+    <Compile Include="Entidade\IEntidade.cs" />
     <Compile Include="Migrations\202001160426266_InitialMigration.cs" />
     <Compile Include="Migrations\202001160426266_InitialMigration.designer.cs">
       <DependentUpon>202001160426266_InitialMigration.cs</DependentUpon>

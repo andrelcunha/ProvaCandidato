@@ -8,7 +8,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace ProvaCandidato.Data.Entidade
 {
     [Table("Cliente")]
-    public class Cliente
+    public class Cliente:IEntidade
     {
         [Key]
         [Column("codigo")]

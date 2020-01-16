@@ -7,7 +7,7 @@ using System.Linq;
 namespace ProvaCandidato.Data.Entidade
 {
     [Table("Cidade")]
-    public class Cidade
+    public class Cidade: IEntidade
     {
         [Key]
         [Column("codigo")]
