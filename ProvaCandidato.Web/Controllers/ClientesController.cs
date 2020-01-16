@@ -54,6 +54,10 @@ namespace ProvaCandidato.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([Bind(Include = "Codigo,Nome,DataNascimento,CidadeId,Ativo")] Cliente cliente)
         {
+            if (cliente.DataNascimento > DateTime.Now)
+            {
+                ModelState.AddModelError("DataNascimento", "A data de nascimento deve ser inferior à data atual.");
+            }
             if (ModelState.IsValid)
             {
                 db.Clientes.Add(cliente);

@@ -6,16 +6,18 @@ using System.Linq;
 
 namespace ProvaCandidato.Data.Entidade
 {
-  [Table("Cidade")]
-  public class Cidade
-  {
-    [Key]
-    [Column("codigo")]
-    public int Codigo { get; set; }
+    [Table("Cidade")]
+    public class Cidade
+    {
+        [Key]
+        [Column("codigo")]
+        public int Codigo { get; set; }
 
-    [Column("nome")]
-    [StringLength(50)]
-    [Required]
-    public string Nome { get; set; }
-  }
+        [Column("nome")]
+        [MinLength(3)]
+        [MaxLength(50)]
+        [StringLength(50)]
+        [Required]
+        public string Nome { get; set; }
+    }
 }

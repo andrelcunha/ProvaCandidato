@@ -15,12 +15,15 @@ namespace ProvaCandidato.Data.Entidade
         public int Codigo { get; set; }
 
         [StringLength(50)]
+        [MinLength(3)]
+        [MaxLength(50)]
         [Required]
         [Column("nome")]
         public string Nome { get; set; }
 
         [Column("data_nascimento")]
         [DisplayName("Data de nascimento")]
+        [DataType(DataType.Date)]
         public DateTime? DataNascimento { get; set; }
 
         [Column("codigo_cidade")]
