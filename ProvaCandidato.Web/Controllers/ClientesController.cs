@@ -19,7 +19,9 @@ namespace ProvaCandidato.Controllers
         // GET: Clientes
         public async Task<ActionResult> Index()
         {
-            var clientes = db.Clientes.Include(c => c.Cidade);
+            var clientes = db.Clientes
+                .Where(c => c.Ativo)
+                .Include(c => c.Cidade);
             return View(await clientes.ToListAsync());
         }
 
